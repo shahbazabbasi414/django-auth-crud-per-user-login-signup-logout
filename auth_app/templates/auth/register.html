@@ -1,0 +1,53 @@
+{% extends 'layouts/app.html' %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-sm-6">
+        <h2 class="text-muted">Register</h2>
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                <input type="text" name="{{ form.username.name }}" class="form-control" id="{{ form.username.id_for_label }}" value="">
+                {% if form.username.errors %}
+                <span class="text-danger">{{ form.username.errors }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}">Password:</label>
+                <input type="password" name="{{ form.password1.name }}" class="form-control" id="{{ form.password1.id_for_label }}" value="">
+                <button type="button" class="btn btn-danger btn-sm mt-1" onclick="togglePasswordVisibility('id_password1')">Show Password</button>
+                {% if form.password1.errors %}
+                <span class="text-danger">{{ form.password1.errors }}</span>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}">Re-Type Password:</label>
+                <input type="password" name="{{ form.password2.name }}" class="form-control" id="{{ form.password2.id_for_label }}" value="">
+                <button type="button" class="btn btn-danger btn-sm mt-1" onclick="togglePasswordVisibility('id_password2')">Show Password</button>
+                {% if form.password2.errors %}
+                <span class="text-danger">{{ form.password2.errors }}</span>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-success">Submit</button>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+        </form>
+    </div>
+</div>
+
+<script>
+function togglePasswordVisibility(id) {
+    var passwordField = document.getElementById(id);
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+    } else {
+        passwordField.type = "password";
+    }
+}
+</script>
+
+{% endblock %}
