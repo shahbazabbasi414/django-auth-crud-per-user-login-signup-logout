@@ -2,48 +2,58 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
-    <div class="col-sm-6">
-        <h2 class="text-muted">Login</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <h2 class="text-muted text-center">Login</h2>
 
-        {% if form.non_field_errors %}
-        <small class="text-danger">
-            {{ form.non_field_errors.as_ul }}
-        </small>
-        {% endif %}
+            {% if form.non_field_errors %}
+            <small class="text-danger">
+                {{ form.non_field_errors.as_ul }}
+            </small>
+            {% endif %}
 
-        <form method="POST" action="{% url 'login' %}">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="{{ form.username.id_for_label }}">Username:</label>
-                <input type="text" name="{{ form.username.name }}" class="form-control" id="{{ form.username.id_for_label }}" value="">
-                {% if form.username.errors %}
-                <span class="text-danger">{{ form.username.errors }}</span>
-                {% endif %}
-            </div>
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username:</label>
+                    <input type="text" name="{{ form.username.name }}" class="form-control" id="{{ form.username.id_for_label }}" value="">
+                    {% if form.username.errors %}
+                    <span class="text-danger">{{ form.username.errors }}</span>
+                    {% endif %}
+                </div>
 
-            <div class="form-group">
-                <label for="{{ form.password.id_for_label }}">Password:</label>
-                <input type="password" name="{{ form.password.name }}" class="form-control" id="{{ form.password.id_for_label }}" value="">
-                <button type="button" class="btn btn-danger btn-sm mt-1" onclick="togglePasswordVisibility('id_password')">Show Password</button>
-                {% if form.password.errors %}
-                <span class="text-danger">{{ form.password.errors }}</span>
-                {% endif %}
-            </div>
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Password:</label>
+                    <div class="input-group">
+                        <input type="password" name="{{ form.password.name }}" class="form-control" id="{{ form.password.id_for_label }}" value="">
+                        <span class="input-group-addon">
+                            <i class="fa fa-eye" onclick="togglePasswordVisibility('{{ form.password.id_for_label }}', this)"></i>
+                        </span>
+                    </div>
+                    {% if form.password.errors %}
+                    <span class="text-danger">{{ form.password.errors }}</span>
+                    {% endif %}
+                </div>
 
-            <button type="submit" class="btn btn-success">Login</button>
-            <a href="{% url 'register' %}" class="btn btn-primary">Create a new account</a>
-        </form>
+                <button type="submit" class="btn btn-success">Login</button>
+                <a href="{% url 'register' %}" class="btn btn-primary">Create a new account</a>
+            </form>
+        </div>
     </div>
 </div>
 
 <script>
-function togglePasswordVisibility(id) {
+function togglePasswordVisibility(id, icon) {
     var passwordField = document.getElementById(id);
     if (passwordField.type === "password") {
         passwordField.type = "text";
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
     } else {
         passwordField.type = "password";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
     }
 }
 </script>

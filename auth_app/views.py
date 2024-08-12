@@ -89,3 +89,12 @@ def delete_employee(request, pk):
         employee.delete()
         return redirect('dashboard')
     return render(request, 'delete_employee.html', {'employee': employee})
+
+def home(request):
+    return render(request, 'home.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+def contact(request):
+    return render(request, 'contact.html')
